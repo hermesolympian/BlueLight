@@ -1,0 +1,110 @@
+body {
+	margin: 0;
+	padding: 0;
+	padding-top: 25px;
+	background-color: #e9e9e9;
+	color: black;
+}
+
+.wrapper {
+	width: 1024px;
+	height: auto;
+	margin: auto;
+	background-color: gray;
+}
+
+.header {
+	text-align: center;
+	background-color: #303030;
+	padding-top: 15px;
+	height: auto;
+	color: white;
+}
+
+.content {
+	background-color: white;
+	padding: 15px;
+	color: black !important;
+}
+
+.footer {
+	text-align: center;
+	background-color: #303030;
+	color: white;
+	padding-top: 10px;
+	height: 25px;
+}
+
+.txtHeader {
+	font-size: 24pt;
+	display: block;
+}
+
+#menuHolder {
+	width: 1024px;
+	background-color: #656565;
+	height: 30px;
+}
+
+.error {
+	color: red;
+	font-weight: bold;
+}
+
+.success {
+	color : green;
+	font-weight: bold;
+}
+
+.tRight {
+	text-align: right;
+}
+
+.tLeft {
+	text-align: left;
+}
+
+.tCenter {
+	text-align: center;
+}
+
+.tSmall {
+	font-size: 11pt;
+}
+
+.tMedium {
+	font-size: 16pt;
+	font-weight: bold;
+}
+
+.tLarge {
+	font-size: 24pt;
+	font-weight: bolder;
+}
+
+.space {
+	padding : 10px;
+}
+
+#menuHolder a{
+	text-decoration: underline;
+	color: white;
+}
+
+#btnSignout {
+	color: black;
+}
+
+.paginationProduct {
+	 width:600px;
+	 margin:0 auto;
+}
+
+a:hover, a:visited, a{
+	color: black;
+	text-decoration: none;
+}
+
+a:active{
+	text-decoration: underline;
+}
