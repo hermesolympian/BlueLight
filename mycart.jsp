@@ -15,6 +15,13 @@
 	</label>
 	<%
 	Vector <String> vector_productid = new Vector<String>();
+	if(request.getParameter("removeproductid") != null)
+	{
+		if(request.getParameter("removeproductid").equals("all"))
+		{
+		session.setAttribute("vector_productid",null);
+		}
+	}
 	vector_productid = (Vector <String>) session.getAttribute("vector_productid");
 	if(vector_productid != null){
 		if(vector_productid.contains(request.getParameter("removeproductid")))
@@ -22,9 +29,6 @@
 		vector_productid.remove(request.getParameter("removeproductid"));
 		session.setAttribute("vector_productid",vector_productid);
 		}
-	}
-	else{
-	out.print(request.getParameterValues("productid"));
 	}
 	%>
 	<form method="get" action="process/do_checkoutall.jsp">
@@ -96,6 +100,6 @@
 	<%}%>
 	</form>
 	<div>
-	<a href="product.jsp">continue shopping</a>
+	<a href="product.jsp">continue shopping</a> | <a href="mycart.jsp?removeproductid=all">remove all</a>
 </div>
 <%@ include file ="footer.jsp"%>

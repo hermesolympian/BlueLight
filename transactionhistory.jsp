@@ -3,72 +3,82 @@
 <%@ include file="header.jsp" %>
 <%
 	String userid = (String)session.getAttribute("user_id");
-	String query = "SELECT MsProduct.ProductName,MsProduct.Price,TrUserBuyTransactionHistory.OwnedQty,TrUserBuyTransactionHistory.DateIn,MsProduct.Img FROM TrUserBuyTransactionHistory INNER JOIN MsProduct on val(TrUserBuyTransactionHistory.ProductId) = MsProduct.ProductId where TrUserBuyTransactionHistory.UserId = '"+userid+"' ORDER BY TrUserBuyTransactionHistory.dateIn DESC";
-	String cari = request.getParameter("search");
-	
-	if(cari != null){
-		query = "SELECT MsProduct.ProductName,MsProduct.Price,TrUserBuyTransactionHistory.OwnedQty,TrUserBuyTransactionHistory.DateIn FROM TrUserBuyTransactionHistory INNER JOIN MsProduct on val(TrUserBuyTransactionHistory.ProductId) = MsProduct.ProductId WHERE MsProduct.ProductName LIKE '%"+cari+"%' and TrUserBuyTransactionHistory.UserId = '"+userid+"' ORDER BY TrUserBuyTransactionHistory.dateIn DESC";
+	String query = "";
+	if(role != null && role.equals("Member")){
+	query = "SELECT TrUserBuyTransactionHistory.TransactionID,MsUser.UserName,TrUserBuyTransactionHistory.DateIn FROM TrUserBuyTransactionHistory INNER JOIN MsUser on val(TrUserBuyTransactionHistory.UserId) = MsUser.UserId WHERE TrUserBuyTransactionHistory.Approved = 0 and TrUserBuyTransactionHistory.UserId = '"+userid+"' ORDER BY TrUserBuyTransactionHistory.dateIn DESC";
 	}
-	
+	else
+	{
+	query = "SELECT TrUserBuyTransactionHistory.TransactionID,MsUser.UserName,TrUserBuyTransactionHistory.DateIn FROM TrUserBuyTransactionHistory INNER JOIN MsUser on val(TrUserBuyTransactionHistory.UserId) = MsUser.UserId WHERE TrUserBuyTransactionHistory.Approved = 0 ORDER BY TrUserBuyTransactionHistory.dateIn DESC";
+	}
 	ResultSet rs = st.executeQuery(query);
 	
-	rs.last();
-	int totaldata = rs.getRow();
-	rs.beforeFirst();
-	
-	int banyak = 16;
-	int current = 0;
-	int halaman = 1;
-	
-	if(request.getParameter("halaman") != null){
-		halaman = Integer.parseInt(request.getParameter("halaman"));
-	}
-	
-	int akhir = banyak * halaman;
-	int awal = akhir - (banyak - 1);
 	
 %>
 
 <body>
-<div align="center">
-	<form action="transactionhistory.jsp" method="get">
-		<input type="text" name="search" />
-		<input type="submit" value="search">
-	</form>
-</div>
+<b>Waiting Transaction</b>
 <table style="width:600px;align=left; margin:25px 10px 0px 250px;" border=1>
 <tr>
+	<th>Transaction ID</th>
+	<th>Username</th>
+	<th>Transaction Date</th>
+	<th>Action</th>
+</tr>
 	<%
 		while(rs.next()){
-			if(rs.getRow() >= awal  && rs.getRow() <= akhir){
-				if(current++%4 == 0)
-				{
+		String transactionid = rs.getString(1);
   %>
-  </tr>
   <tr>
-  <%}%>
-    <td width="10px" height="110px" align="center"><img src="Images/<%= rs.getString(5) %>" width="100px" height="100px" /></td>
-    <td width="400px" height="110px">
-    	<b>Product Name</b>: <%=rs.getString(1)%><br/>
-        <b>Price</b>: Rp. <%=rs.getString(2)%><br/>
-        <b>Quantity</b>: <%=rs.getString(3)%> Pcs<br/>
-        <b>Transaction Date</b>: <%=rs.getString(4)%><br/>
-    </td>
+	<td><%=transactionid%></td>
+	<td><%=rs.getString(2)%></td>
+	<td><%=rs.getString(3)%></td>
+    <td>
+	<a href="detailtransactionhistory.jsp?transactionid=<%=transactionid%>">details</a>
+	</br><a href="process\do_remove.jsp?transactionid=<%=transactionid%>">remove</a>
+	<%//if(role != null && role.equals("Admin")){%>
+	</br><a href="process\do_approve.jsp?transactionid=<%=transactionid%>">approve</a>
+	<%//}%>
+	</td>
 	</tr>
   	<%
-			}
 		}
 	%>
 </table>
-	<!--<div align="right">
-    	<%
-			//ceil buat buletin keatas;
-			int totalhalaman = (int)Math.ceil(totaldata*1.0 / banyak*1.0);
-			
-			for(int i = 0;i< totalhalaman;i++ ){
-				out.print("<a href=transactionhistory.jsp?halaman="+(i+1)+"> "+(i+1)+" </a>");
-			}
-			con.close();
-		%>
-    </div>-->
+</br></br>
+<b>Approved Transaction</b>
+<table style="width:600px;align=left; margin:25px 10px 0px 250px;" border=1>
+<tr>
+	<th>Transaction ID</th>
+	<th>Username</th>
+	<th>Transaction Date</th>
+	<th>Action</th>
+</tr>
+	<%
+	if(role != null && role.equals("Member")){
+	query = "SELECT TrUserBuyTransactionHistory.TransactionID,MsUser.UserName,TrUserBuyTransactionHistory.DateIn FROM TrUserBuyTransactionHistory INNER JOIN MsUser on val(TrUserBuyTransactionHistory.UserId) = MsUser.UserId WHERE TrUserBuyTransactionHistory.Approved = 1 and TrUserBuyTransactionHistory.UserId = '"+userid+"' ORDER BY TrUserBuyTransactionHistory.dateIn DESC";
+	}
+	else
+	{
+	query = "SELECT TrUserBuyTransactionHistory.TransactionID,MsUser.UserName,TrUserBuyTransactionHistory.DateIn FROM TrUserBuyTransactionHistory INNER JOIN MsUser on val(TrUserBuyTransactionHistory.UserId) = MsUser.UserId WHERE TrUserBuyTransactionHistory.Approved = 1 ORDER BY TrUserBuyTransactionHistory.dateIn DESC";
+	}
+	rs = st.executeQuery(query);
+	
+	while(rs.next()){
+	String transactionid = rs.getString(1);
+  %>
+  <tr>
+	<td><%=transactionid%></td>
+	<td><%=rs.getString(2)%></td>
+	<td><%=rs.getString(3)%></td>
+    <td>
+	<a href="detailtransactionhistory.jsp?transactionid=<%=transactionid%>">details</a>
+	</td>
+	</tr>
+  	<%
+	}
+	%>
+</table>
+</body>
+
 <%@ include file="footer.jsp" %>
