@@ -11,7 +11,7 @@ String oldParent = " ";
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript">
 	$(document).ready ( function(){
-   $('#menuHolder > li > ul:eq(0)').hide();
+   $('#menuHolder li ul:eq(0)').hide();
 	});
 	</script>
 	<style>
@@ -22,9 +22,7 @@ String oldParent = " ";
     margin: 0;
     list-style: none;
 }
-	#menuHolder div{
-	width: 120px;
-}
+
    #menuHolder{
 	text-align: cemter;
    }
@@ -38,6 +36,7 @@ String oldParent = " ";
 	z-index: 100;
     list-style: none;
     padding: 0px 10px 0px 10px;
+	display: none;
 }
 
 	</style>
@@ -49,6 +48,10 @@ String oldParent = " ";
 			<div class="header">
 				<span class="txtHeader" style="color: orange;">Bluelight Online Shop</span>
 				<br />
+				<!--menuHolder ini adalah management menu untuk mengambil menu dari database
+					Query yang digunakan menggunakan join agar menghindari menggunakan 2 query atau netsted while.
+					Karena jika menggunakan 2 query nanti harus disediakan lagi 2 file connect.
+				-->
 				<ul id="menuHolder" style="padding: 0 0 0 0; height: 10px;">
 						<li><div><a href="index.jsp">Home</a></div></li>
 						<%
@@ -68,13 +71,13 @@ String oldParent = " ";
 						%>
 								<li><div><a href="changepassword.jsp">Change Password</a></div></li>
 						<%
-								oldParent = "-";
+								oldParent = " ";
 								ResultSet parentMenu = st.executeQuery("select MsParentMenu.ParentName,IIF(MsParentMenu.ParentAddress is null,'-',MsParentMenu.ParentAddress) as ParentAddress,MsMenu.* from MsParentMenu left join MsMenu on MsParentMenu.ParentMenuID=MsMenu.ParentMenuID where MsParentMenu.User <= " + level + " AND IIF(MsMenu.User is null, true, MsMenu.User <= " +level+") Order by ParentMenuOrder,MenuOrder");
 							while(parentMenu.next()){
 								boolean a = oldParent.equals(parentMenu.getString("ParentName"));
 								if(!a)
 								{
-									if(!oldParent.equals("-"))
+									if(!oldParent.equals(" "))
 									{%>
 									</ul></li>
 									<%}
@@ -83,16 +86,17 @@ String oldParent = " ";
 								if(!PLink.equals("-"))
 								{
 								%>
-									<li><div><a href="<%=PLink%>.jsp"><%=oldParent%></a></div></li>
+									<li style="width: <%=oldParent.length()*10%>px;"><div><a href="<%=PLink%>.jsp"><%=oldParent%></a></div></li>
 								<%
+								oldParent = " ";
 								continue;
 								}
 								else{
 								%>
-								<li><div><a href="#"><%=oldParent%></a></div>
+								<li style="width:135px;"><div><a href="#"><%=oldParent%></a></div>
 								<ul class="childMenu">
 								<%}}%>
-							<li><a href="<%=parentMenu.getString(7)%>.jsp"><%=parentMenu.getString("MenuName")%></a></li>
+							<li style="width:135px;"><a href="<%=parentMenu.getString(7)%>.jsp"><%=parentMenu.getString("MenuName")%></a></li>
 							<%}}%>
 <!--					<li><a href="testimonial.jsp">Testimonial</a></li>-->
 						</ul>
