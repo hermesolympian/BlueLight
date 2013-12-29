@@ -1,4 +1,10 @@
 <%@ include file="header.jsp" %>
+<%
+	if(!role.equals("Admin"))
+	{
+	   response.sendRedirect("product.jsp");
+	}
+%>
 <div class="content">
 	<div style="margin:50px 0 0 0;" class="tCenter tLarge">
 		Manage Product

@@ -58,7 +58,7 @@ String oldParent = " ";
 							String role = (String)session.getAttribute("user_role");
 							if(role == null){
 						%>
-						<li><div>Register</div></li>
+						<li><div><a href="register.jsp">Register</a></div></li>
 						<li><div><a href="product.jsp">Product</a></div></li>
 						<li><div><a href="testimonial.jsp">Testimonial</a></div></li>
 						<%

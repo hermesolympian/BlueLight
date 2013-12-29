@@ -39,14 +39,14 @@
 		int halaman = 1;
 
 		int totalPage = (int)Math.ceil(totaldata*1.0 / banyak*1.0);
-		
+
 		if(request.getParameter("halaman") != null){
 			halaman = Integer.parseInt(request.getParameter("halaman"));
 		}
-		
+
 		int akhir = banyak * halaman;
 		int awal = akhir - (banyak - 1);
-		
+
 %>
 	<div class="tCenter tLarge">Product</div>
 	<div class="tCenter tMedium">
@@ -66,7 +66,9 @@
 				</tr>
 			</table>
 		</form>
+		<%if(role.equals("Admin")){%>
 		<div><a href="addproduct.jsp">Add Product</a></div>
+		<%}%>
 		<table bgcolor="#BFBFBF" cellspacing="5" align="center" border="1" width="600px">
 			<tr>
 				<th>Lamp Name</th>

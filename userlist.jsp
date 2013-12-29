@@ -1,5 +1,4 @@
 <%@ include file="header.jsp" %>
-<%@ include file="process/connect.jsp" %>
 <%
 	//String role = (String)session.getAttribute("user_online");
 	if(role.equals("Admin") == false){
