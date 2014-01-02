@@ -17,7 +17,9 @@
 %>
 
 <body>
+<div style="width:600px;text-align: center; margin:25px 10px 0px 250px;"> 
 <b>Waiting Transaction</b>
+</div>
 <table style="width:600px;align=left; margin:25px 10px 0px 250px;" border=1>
 <tr>
 	<th>Transaction ID</th>
@@ -36,9 +38,9 @@
     <td>
 	<a href="detailtransactionhistory.jsp?transactionid=<%=transactionid%>">details</a>
 	</br><a href="process\do_remove.jsp?transactionid=<%=transactionid%>">remove</a>
-	<%//if(role != null && role.equals("Admin")){%>
+	<%if(role != null && role.equals("Admin")){%>
 	</br><a href="process\do_approve.jsp?transactionid=<%=transactionid%>">approve</a>
-	<%//}%>
+	<%}%>
 	</td>
 	</tr>
   	<%
@@ -46,7 +48,9 @@
 	%>
 </table>
 </br></br>
+<div style="width:600px;text-align: center; margin:25px 10px 0px 250px;"> 
 <b>Approved Transaction</b>
+</div>
 <table style="width:600px;align=left; margin:25px 10px 0px 250px;" border=1>
 <tr>
 	<th>Transaction ID</th>

@@ -13,7 +13,9 @@
 %>
 
 <body>
-<b>Detail transasction</b></br>
+<div style="width:600px;text-align: center; margin:25px 10px 0px 250px;"> 
+<b>Detail Transaction</b>
+</div>
 <table style="width:600px;align=left; margin:25px 10px 0px 250px;" border=1>
 <tr>
 	<th>Product Name</th>
