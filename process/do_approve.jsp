@@ -11,6 +11,6 @@
 	st.executeUpdate(query);
 	
 	
-	response.sendRedirect("../product.jsp");
+	response.sendRedirect("../transactionhistory.jsp");
 	
 %>

@@ -21,6 +21,7 @@ String oldParent = " ";
     padding: 0px 25px 0px 25px;
     margin: 0;
     list-style: none;
+	background-color: #656565;
 }
 
    #menuHolder{
@@ -29,7 +30,7 @@ String oldParent = " ";
    
     #menuHolder li a{
 	font-weight: bold;
-	color: orange;
+	color: whitesmoke;
 	}
   
 .childMenu{
@@ -65,13 +66,20 @@ String oldParent = " ";
 						<%
 							}
 							else {
+							String query = "";
 								if(role.equals("Admin"))
+								{
 									level = 3;
+									 query = "select MsParentMenu.ParentName,IIF(MsParentMenu.ParentAddress is null,'-',MsParentMenu.ParentAddress) as ParentAddress,MsMenu.* from MsParentMenu left join MsMenu on MsParentMenu.ParentMenuID=MsMenu.ParentMenuID where MsParentMenu.User <= " + level + " AND IIF(MsMenu.User is null, true, MsMenu.User <> 1) ";
+								}
 								else if(role.equals("Member")) //user
-									level = 1;
-									
+								{
+									level = 2;
+									query = "select MsParentMenu.ParentName,IIF(MsParentMenu.ParentAddress is null,'-',MsParentMenu.ParentAddress) as ParentAddress,MsMenu.* from MsParentMenu left join MsMenu on MsParentMenu.ParentMenuID=MsMenu.ParentMenuID where MsParentMenu.User <= " + level + " AND IIF(MsMenu.User is null, true, MsMenu.User <= " +level+") ";
+								}
+								query = query + "Order by ParentMenuOrder,MenuOrder";
 								oldParent = " ";
-								ResultSet parentMenu = st.executeQuery("select MsParentMenu.ParentName,IIF(MsParentMenu.ParentAddress is null,'-',MsParentMenu.ParentAddress) as ParentAddress,MsMenu.* from MsParentMenu left join MsMenu on MsParentMenu.ParentMenuID=MsMenu.ParentMenuID where MsParentMenu.User <= " + level + " AND IIF(MsMenu.User is null, true, MsMenu.User <= " +level+") Order by ParentMenuOrder,MenuOrder");
+								ResultSet parentMenu = st.executeQuery(query);
 							while(parentMenu.next()){
 								boolean a = oldParent.equals(parentMenu.getString("ParentName"));
 								if(!a)
