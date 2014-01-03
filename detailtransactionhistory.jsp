@@ -8,11 +8,18 @@
 		response.sendRedirect("../transactionhistory.jsp");
 	}
 	String transactionid = request.getParameter("transactionid");
-	String query = "SELECT MsProduct.ProductName,MsProduct.Price,TrUserBuyTransactionHistory.OwnedQty FROM TrUserBuyTransactionHistory INNER JOIN MsProduct on val(TrUserBuyTransactionHistory.ProductId) = MsProduct.ProductId where TrUserBuyTransactionHistory.UserId = '"+userid+"' and TrUserBuyTransactionHistory.Transactionid="+transactionid;
+	String query = "SELECT MsProduct.ProductName,MsProduct.Price,TrUserBuyTransactionHistory.OwnedQty FROM TrUserBuyTransactionHistory INNER JOIN MsProduct on val(TrUserBuyTransactionHistory.ProductId) = MsProduct.ProductId where TrUserBuyTransactionHistory.Transactionid="+transactionid;
 	ResultSet rs = st.executeQuery(query);
 %>
 
-<body>
+<div class="content">
+<%
+		if(session.getAttribute("user_name") != null){
+	%>
+		<%@ include file="process/show_data.jsp" %>
+	<%
+		}
+%>
 <div style="width:600px;text-align: center; margin:25px 10px 0px 250px;"> 
 <b>Detail Transaction</b>
 </div>
@@ -34,4 +41,5 @@
 		}
 	%>
 </table>
+</div>
 <%@ include file="footer.jsp" %>

@@ -1,6 +1,13 @@
 <%@ include file="header.jsp" %>
 	
 	<div class="content">
+	<%
+		if(session.getAttribute("user_name") != null){
+	%>
+		<%@ include file="process/show_data.jsp" %>
+	<%
+		}
+	%>
 	<label>
 	<%
 	if(request.getParameter("info") != null)

@@ -27,7 +27,7 @@
 		rs.next();
 		if(rs.getInt("Qty") >= Integer.parseInt(qty) && Integer.parseInt(qty) != 0){
 		
-		query = "insert into TrUserBuyTransactionHistory (UserID,ProductID,OwnedQty,DateIn) values('"+userid+"','"+productid+"','"+qty+"',Now())";
+		query = "insert into TrUserBuyTransactionHistory (UserID,ProductID,OwnedQty,DateIn,Approved) values('"+userid+"','"+productid+"','"+qty+"',Now(),0)";
 		st.executeUpdate(query);
 		
 		query = "";

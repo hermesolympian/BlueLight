@@ -16,7 +16,14 @@
 	
 %>
 
-<body>
+<div class="content">
+<%
+		if(session.getAttribute("user_name") != null){
+	%>
+		<%@ include file="process/show_data.jsp" %>
+	<%
+		}
+%>
 <div style="width:600px;text-align: center; margin:25px 10px 0px 250px;"> 
 <b>Waiting Transaction</b>
 </div>
@@ -83,6 +90,6 @@
 	}
 	%>
 </table>
-</body>
+</div>
 
 <%@ include file="footer.jsp" %>

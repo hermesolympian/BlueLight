@@ -57,6 +57,7 @@ String oldParent = " ";
 						<%
 							String role = (String)session.getAttribute("user_role");
 							if(role == null){
+							role = "";
 						%>
 						<li><div><a href="register.jsp">Register</a></div></li>
 						<li><div><a href="product.jsp">Product</a></div></li>
@@ -68,9 +69,7 @@ String oldParent = " ";
 									level = 3;
 								else if(role.equals("Member")) //user
 									level = 1;
-						%>
-								<li><div><a href="changepassword.jsp">Change Password</a></div></li>
-						<%
+									
 								oldParent = " ";
 								ResultSet parentMenu = st.executeQuery("select MsParentMenu.ParentName,IIF(MsParentMenu.ParentAddress is null,'-',MsParentMenu.ParentAddress) as ParentAddress,MsMenu.* from MsParentMenu left join MsMenu on MsParentMenu.ParentMenuID=MsMenu.ParentMenuID where MsParentMenu.User <= " + level + " AND IIF(MsMenu.User is null, true, MsMenu.User <= " +level+") Order by ParentMenuOrder,MenuOrder");
 							while(parentMenu.next()){
